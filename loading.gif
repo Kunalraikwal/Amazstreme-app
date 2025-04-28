@@ -1,0 +1,50 @@
+import numpy as np
+import imageio
+from PIL import Image, ImageDraw
+
+# Settings
+size = 128  # GIF size
+duration = 1.0  # Animation duration in seconds
+fps = 15  # Frames per second
+frames = int(duration * fps)
+primary_color = "#00B4FF"  # Amazstreme blue (change to your brand color)
+bg_color = "#0A0F14"  # Dark background
+
+# Create frames
+images = []
+for i in range(frames):
+    img = Image.new("RGBA", (size, size), bg_color)
+    draw = ImageDraw.Draw(img)
+    
+    # Calculate rotation angle (0-360 degrees)
+    angle = i * (360 / frames)
+    
+    # Draw rotating arc (YouTube-style)
+    draw.arc(
+        [(10, 10), (size-10, size-10)],
+        start=angle - 30,
+        end=angle + 150,
+        fill=primary_color,
+        width=8
+    )
+    
+    # Add small Amazstreme "A" in center
+    draw.text(
+        (size//2, size//2),
+        "A",
+        fill=primary_color,
+        font_size=size//5,
+        anchor="mm"
+    )
+    
+    images.append(img)
+
+# Save as GIF
+imageio.mimsave(
+    "amazstreme_loading.gif",
+    images,
+    duration=1/fps,
+    loop=0  # Infinite loop
+)
+
+print("Amazstreme loading GIF created successfully!")

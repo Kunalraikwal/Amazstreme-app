@@ -1,0 +1,45 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# Settings
+width, height = 800, 400  # Wide format for text logo
+bg_color = (255, 255, 255)  # White background
+text_color = (0, 0, 0)  # Black text (change to your brand colors)
+highlight_color = (220, 53, 69)  # Red accent color example
+
+# Create blank image
+img = Image.new("RGB", (width, height), bg_color)
+draw = ImageDraw.Draw(img)
+
+# Load fonts (replace with your preferred fonts)
+try:
+    bold_font = ImageFont.truetype("arialbd.ttf", 120)  # For "FINANCIAL"
+    regular_font = ImageFont.truetype("arial.ttf", 100)  # For "BEAUTY"
+except:
+    # Fallback fonts
+    bold_font = ImageFont.load_default()
+    regular_font = ImageFont.load_default()
+
+# Calculate text positions
+financial_text = "FINANCIAL"
+beauty_text = "BEAUTY"
+
+# Draw "FINANCIAL" (top line)
+financial_bbox = draw.textbbox((0, 0), financial_text, font=bold_font)
+financial_width = financial_bbox[2] - financial_bbox[0]
+financial_x = (width - financial_width) // 2
+draw.text((financial_x, 50), financial_text, fill=text_color, font=bold_font)
+
+# Draw "BEAUTY" (bottom line)
+beauty_bbox = draw.textbbox((0, 0), beauty_text, font=regular_font)
+beauty_width = beauty_bbox[2] - beauty_bbox[0]
+beauty_x = (width - beauty_width) // 2
+draw.text((beauty_x, 200), beauty_text, fill=text_color, font=regular_font)
+
+# Optional: Add decorative line
+line_y = 180  # Between the two words
+draw.line([(financial_x, line_y), (financial_x + financial_width, line_y)], 
+          fill=highlight_color, width=3)
+
+# Save
+img.save("financial_beauty_logo.png", "PNG")
+print("FINANCIAL BEAUTY logo created successfully!")

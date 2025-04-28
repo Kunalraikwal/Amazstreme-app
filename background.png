@@ -1,0 +1,64 @@
+import pygame
+import random
+import math
+import sys
+
+# Initialize pygame
+pygame.init()
+
+# Dimensions - adjust as needed
+width, height = 1200, 800
+screen = pygame.Surface((width, height))
+
+# Base color (dark futuristic background)
+screen.fill((10, 15, 20))  # Very dark blue/black
+
+# Create glowing circuit-like patterns
+def draw_circuit(surface):
+    # Primary circuit color (Amazstreme brand color could go here)
+    circuit_color = (0, 180, 255)  # Electric blue
+    glow_color = (100, 220, 255, 50)  # With alpha for glow
+    
+    # Horizontal lines
+    for y in range(100, height, 150):
+        pygame.draw.line(surface, circuit_color, (0, y), (width, y), 2)
+        # Add glow effect
+        for i in range(1, 5):
+            alpha = 50 - i*10
+            temp_surface = pygame.Surface((width, height), pygame.SRCALPHA)
+            pygame.draw.line(temp_surface, (*glow_color[:3], alpha), (0, y), (width, y), 3+i)
+            surface.blit(temp_surface, (0, 0))
+    
+    # Vertical connectors
+    for x in range(200, width, 250):
+        start_y = random.randint(50, height-50)
+        length = random.randint(100, 300)
+        pygame.draw.line(surface, circuit_color, (x, start_y), (x, start_y + length), 2)
+        
+    # Add some random nodes
+    for _ in range(15):
+        x, y = random.randint(50, width-50), random.randint(50, height-50)
+        radius = random.randint(3, 8)
+        pygame.draw.circle(surface, circuit_color, (x, y), radius)
+        pygame.draw.circle(surface, (255, 255, 255), (x, y), radius-2)
+
+# Draw the circuit pattern
+draw_circuit(screen)
+
+# Add Amazstreme logo/text (simplified version)
+font = pygame.font.SysFont('Arial', 60, bold=True)
+text = font.render("AMAZSTREME", True, (255, 255, 255))
+text_rect = text.get_rect(center=(width//2, height//2))
+
+# Create glow effect for text
+for i in range(10, 0, -2):
+    temp_text = font.render("AMAZSTREME", True, (*(0, 180, 255), i*5))
+    temp_rect = temp_text.get_rect(center=(width//2, height//2))
+    screen.blit(temp_text, temp_rect)
+
+screen.blit(text, text_rect)
+
+# Save the image
+pygame.image.save(screen, "amazstreme_background.png")
+
+print("Amazstreme background created successfully!")
