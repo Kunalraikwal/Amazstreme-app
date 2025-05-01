@@ -1,45 +1,65 @@
-from PIL import Image, ImageDraw, ImageFont
+import turtle
 
-# Settings
-width, height = 800, 400  # Wide format for text logo
-bg_color = (255, 255, 255)  # White background
-text_color = (0, 0, 0)  # Black text (change to your brand colors)
-highlight_color = (220, 53, 69)  # Red accent color example
+screen = turtle.Screen()
+screen.bgcolor("#d0d0d0")
+t = turtle.Turtle()
+t.speed(0)
+t.width(3)
 
-# Create blank image
-img = Image.new("RGB", (width, height), bg_color)
-draw = ImageDraw.Draw(img)
+def draw_ring(radius, color):
+    t.up()
+    t.goto(0, -radius)
+    t.down()
+    t.color(color)
+    t.begin_fill()
+    t.circle(radius)
+    t.end_fill()
 
-# Load fonts (replace with your preferred fonts)
-try:
-    bold_font = ImageFont.truetype("arialbd.ttf", 120)  # For "FINANCIAL"
-    regular_font = ImageFont.truetype("arial.ttf", 100)  # For "BEAUTY"
-except:
-    # Fallback fonts
-    bold_font = ImageFont.load_default()
-    regular_font = ImageFont.load_default()
+# Background light blue ring
+draw_ring(120, "#00BFFF")  # Outer ring - Sky Blue
 
-# Calculate text positions
-financial_text = "FINANCIAL"
-beauty_text = "BEAUTY"
+# Orange ring
+draw_ring(100, "#FFA500")  # Middle ring - Orange
 
-# Draw "FINANCIAL" (top line)
-financial_bbox = draw.textbbox((0, 0), financial_text, font=bold_font)
-financial_width = financial_bbox[2] - financial_bbox[0]
-financial_x = (width - financial_width) // 2
-draw.text((financial_x, 50), financial_text, fill=text_color, font=bold_font)
+# Inner blue ring
+draw_ring(80, "#1E90FF")   # Inner ring - Dodger Blue
 
-# Draw "BEAUTY" (bottom line)
-beauty_bbox = draw.textbbox((0, 0), beauty_text, font=regular_font)
-beauty_width = beauty_bbox[2] - beauty_bbox[0]
-beauty_x = (width - beauty_width) // 2
-draw.text((beauty_x, 200), beauty_text, fill=text_color, font=regular_font)
+# Black inner circle (like shadow)
+draw_ring(60, "black")
 
-# Optional: Add decorative line
-line_y = 180  # Between the two words
-draw.line([(financial_x, line_y), (financial_x + financial_width, line_y)], 
-          fill=highlight_color, width=3)
+# Play button triangle
+def draw_play_button():
+    t.up()
+    t.goto(-20, -35)
+    t.down()
+    t.color("orange")
+    t.begin_fill()
+    t.goto(-20, 35)
+    t.goto(50, 0)
+    t.goto(-20, -35)
+    t.end_fill()
 
-# Save
-img.save("financial_beauty_logo.png", "PNG")
-print("FINANCIAL BEAUTY logo created successfully!")
+draw_play_button()
+
+# Top dot (like bird-eye in your image)
+t.up()
+t.goto(60, 90)
+t.down()
+t.color("black")
+t.begin_fill()
+t.circle(10)
+t.end_fill()
+
+# Small triangle (beak-style shape in your logo)
+t.up()
+t.goto(80, 20)
+t.down()
+t.color("#1E90FF")
+t.begin_fill()
+t.goto(140, 50)
+t.goto(80, 80)
+t.goto(80, 20)
+t.end_fill()
+
+t.hideturtle()
+screen.mainloop()
