@@ -1,0 +1,81 @@
+import turtle
+
+def setup_screen():
+    """Initialize the turtle screen with custom settings"""
+    screen = turtle.Screen()
+    screen.bgcolor("#d0d0d0")
+    screen.title("Custom Logo Animation")
+    return screen
+
+def create_turtle():
+    """Create and configure the turtle object"""
+    t = turtle.Turtle()
+    t.speed(0)
+    t.width(3)
+    t.hideturtle()
+    return t
+
+def draw_ring(turtle_obj, radius, color):
+    """Draw a filled circle (ring) with given radius and color"""
+    turtle_obj.up()
+    turtle_obj.goto(0, -radius)
+    turtle_obj.down()
+    turtle_obj.color(color)
+    turtle_obj.begin_fill()
+    turtle_obj.circle(radius)
+    turtle_obj.end_fill()
+
+def draw_play_button(turtle_obj):
+    """Draw a play button triangle"""
+    turtle_obj.up()
+    turtle_obj.goto(-20, -35)
+    turtle_obj.down()
+    turtle_obj.color("orange")
+    turtle_obj.begin_fill()
+    turtle_obj.goto(-20, 35)
+    turtle_obj.goto(50, 0)
+    turtle_obj.goto(-20, -35)
+    turtle_obj.end_fill()
+
+def draw_top_dot(turtle_obj):
+    """Draw the top decorative dot"""
+    turtle_obj.up()
+    turtle_obj.goto(60, 90)
+    turtle_obj.down()
+    turtle_obj.color("black")
+    turtle_obj.begin_fill()
+    turtle_obj.circle(10)
+    turtle_obj.end_fill()
+
+def draw_beak(turtle_obj):
+    """Draw the beak-style triangle"""
+    turtle_obj.up()
+    turtle_obj.goto(80, 20)
+    turtle_obj.down()
+    turtle_obj.color("#1E90FF")
+    turtle_obj.begin_fill()
+    turtle_obj.goto(140, 50)
+    turtle_obj.goto(80, 80)
+    turtle_obj.goto(80, 20)
+    turtle_obj.end_fill()
+
+def main():
+    """Main function to draw the logo"""
+    screen = setup_screen()
+    t = create_turtle()
+    
+    # Draw concentric rings
+    draw_ring(t, 120, "#00BFFF")  # Outer ring - Sky Blue
+    draw_ring(t, 100, "#FFA500")  # Middle ring - Orange
+    draw_ring(t, 80, "#1E90FF")   # Inner ring - Dodger Blue
+    draw_ring(t, 60, "black")     # Inner circle
+    
+    # Draw decorative elements
+    draw_play_button(t)
+    draw_top_dot(t)
+    draw_beak(t)
+    
+    screen.mainloop()
+
+if __name__ == "__main__":
+    main()
